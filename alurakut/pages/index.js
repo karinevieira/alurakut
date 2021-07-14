@@ -1,4 +1,4 @@
-
+import React from 'react'
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
@@ -6,7 +6,7 @@ import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 
 function ProfileSidebar(propriedades){
   return(
-    <Box>
+    <Box as="aside">
         <img src={`https://github.com/${propriedades.githubUser}.png`} style={{ borderRadius: '8px' }} />
         <hr />
         <p>
@@ -20,10 +20,14 @@ function ProfileSidebar(propriedades){
 }
 
 export default function Home() {
-
   const githubUser = 'karinevieira'
+  const [communities, setCommunities] = React.useState([{
+    id: '15654846546510654',
+    title: 'Eu odeio acordar cedo',
+    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
+  }])
   const favoriteUsers = ['LucasMagalhaes33', 'maykbrito', 'filipedeschamps', 'gustavoguanabara', 'lucasmontano', 'bonieky']
-  const communities = []
+  // const communities = ['Alurakut']
 
   return (
     <>
@@ -43,6 +47,14 @@ export default function Home() {
             <h2 className="subTitle">O que você deseja fazer?</h2>
             <form onSubmit={function handleCreateCommunity(e){
               e.preventDefault()
+              const formData = new FormData (e.target)
+              const community = {
+                id: new Date().toISOString(),
+                title: formData.get('title'),
+                image: formData.get('image')
+              }
+              const updatedCommunities = [...communities, community]
+              setCommunities(updatedCommunities)
             }}>
               <div>
                 <input placeholder="Qual vai ser o nome da sua comunidade?" name="title" aria-label="Qual vai ser o nome da sua comunidade?" type="text" />
@@ -62,10 +74,10 @@ export default function Home() {
           <ul>
             {communities.map((currentItem) => {
               return (
-              <li>
-                <a href={`/users/${currentItem}`} key={currentItem}>
-                <img src={`https://github.com/${currentItem}.png`} />
-                <span>{currentItem}</span>
+              <li key={currentItem.id}>
+                <a href={`/users/${currentItem.title}`} key={currentItem.title}>
+                <img src={currentItem.image} />
+                <span>{currentItem.title}</span>
                 </a>
               </li>
               )
@@ -78,8 +90,8 @@ export default function Home() {
             <ul>
               {favoriteUsers.map((currentItem) => {
                 return (
-                  <li>
-                    <a href={`/users/${currentItem}`} key={currentItem}>
+                  <li key={currentItem}>
+                    <a href={`/users/${currentItem}`}>
                       <img src={`https://github.com/${currentItem}.png`} />
                       <span>{currentItem}</span>
                     </a>
