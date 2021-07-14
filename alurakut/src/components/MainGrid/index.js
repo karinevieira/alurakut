@@ -22,4 +22,4 @@ const MainGrid = styled.main`
   }
 `
 
-export default MainGrid;
+export default MainGrid
