@@ -19,6 +19,18 @@ function ProfileSidebar(propriedades){
   )
 }
 
+function ProfileRelationsBox(propriedades) {
+  return (
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {propriedades.title} ({propriedades.items.length})</h2>
+      <ul>
+
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  )
+}
+
 export default function Home() {
   const githubUser = 'karinevieira'
   const [communities, setCommunities] = React.useState([{
@@ -27,7 +39,19 @@ export default function Home() {
     image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
   }])
   const favoriteUsers = ['LucasMagalhaes33', 'maykbrito', 'filipedeschamps', 'gustavoguanabara', 'lucasmontano', 'bonieky']
-  // const communities = ['Alurakut']
+  
+  const [Followers, setFollowers] = React.useState([])
+
+  React.useEffect(function() {
+    fetch('https://api.github.com/users/karinevieira/followers')
+      .then(function (respostaDoServidor){
+        return respostaDoServidor.json()
+      })
+      .then(function (respostaCompleta){
+        setFollowers(respostaCompleta)
+      })
+  }, [])
+
 
   return (
     <>
@@ -68,6 +92,7 @@ export default function Home() {
           </Box>
         </div>
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
+          <ProfileRelationsBox title="Followers" items={Followers} />
           <ProfileRelationsBoxWrapper>
           <h2 className="smallTitle">Comunidades ({communities.length}) </h2>
 
