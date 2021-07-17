@@ -33,11 +33,7 @@ function ProfileRelationsBox(propriedades) {
 
 export default function Home() {
   const githubUser = 'karinevieira'
-  const [communities, setCommunities] = React.useState([{
-    id: '15654846546510654',
-    title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-  }])
+  const [communities, setCommunities] = React.useState([])
   const favoriteUsers = ['LucasMagalhaes33', 'maykbrito', 'filipedeschamps', 'gustavoguanabara', 'lucasmontano', 'bonieky']
   
   const [Followers, setFollowers] = React.useState([])
@@ -96,7 +92,7 @@ export default function Home() {
               const community = {
                 // id: new Date().toISOString(),
                 title: formData.get('title'),
-                image: formData.get('image')
+                image: formData.get('imageURL')
               }
 
               fetch('/api/comunidades', {
@@ -127,7 +123,7 @@ export default function Home() {
           </Box>
         </div>
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
-          <ProfileRelationsBox title="Followers" items={Followers} />
+          {/* <ProfileRelationsBox title="Followers" items={Followers} /> */}
           <ProfileRelationsBoxWrapper>
           <h2 className="smallTitle">Comunidades ({communities.length}) </h2>
 
