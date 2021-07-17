@@ -94,12 +94,26 @@ export default function Home() {
               e.preventDefault()
               const formData = new FormData (e.target)
               const community = {
-                id: new Date().toISOString(),
+                // id: new Date().toISOString(),
                 title: formData.get('title'),
                 image: formData.get('image')
               }
-              const updatedCommunities = [...communities, community]
-              setCommunities(updatedCommunities)
+
+              fetch('/api/comunidades', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(community)
+              })
+              .then(async (response) => {
+                const dados = await response.json()
+                console.log(dados.registroCriado)
+                const community = dados.registroCriado
+                const updatedCommunities = [...communities, community]
+                setCommunities(updatedCommunities)
+              })
+
             }}>
               <div>
                 <input placeholder="Qual vai ser o nome da sua comunidade?" name="title" aria-label="Qual vai ser o nome da sua comunidade?" type="text" />
