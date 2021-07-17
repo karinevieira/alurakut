@@ -92,7 +92,7 @@ export default function Home() {
               const community = {
                 // id: new Date().toISOString(),
                 title: formData.get('title'),
-                image: formData.get('imageURL')
+                image: formData.get('imageUrl')
               }
 
               fetch('/api/comunidades', {
